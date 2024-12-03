@@ -3,6 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
     <!-- Latest compiled and minified CSS -->
@@ -13,60 +16,69 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-sm bg-dark navbar-dark ">
-        <div class="container-fluid">
-            <img src="../Student Grade MIS/img/logo.PNG"  alt="" width="100" height="60">
-            <div class="container mt-3">
-                <!-- <img src="../Student Grade MIS/img/logo.PNG"  alt="" width="100" height="60">  -->
-                <ul class="nav justify-content-center nav-pills" role="tablist">
-
-                    <li class="nav-item">
-                        <a class="nav-link  text-white" data-bs-toggle="pill" href="">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link text-white" data-bs-toggle="pill" href="#student">Student</a>
-                    </li>
-                  
-                    <li class="nav-item">
-                        <a class="nav-link text-white" data-bs-toggle="pill" href="#marks">Marks of Student</a>
-                    </li>
-
-
-                </ul>
+    <div class="container-fluid bg-dark">
+        <div class="row">
+            <div class="col-4">
+                <img src="../Student Grade MIS/img/logo.PNG" alt="" width="100" height="54">
             </div>
-        </div>
-    </nav>
+            <div class="col-7">
+                <div class="container mt-2">
+                    <ul class="nav  text-white">
+                        <li class="nav-item">
+                            <a class="nav-link  text-white" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="student.html">Student</a>
+                        </li>
 
-    <div class="container-fluid mt-4">
-        <div class="container mt-3">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="marks.html">Marks of Student</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-1">
+                <a href="#" class="btn btn-light mt-2">Login</a>
+            </div>
+
+        </div>
+
+    </div> 
+    
+    <div class="container-fluid bg-light">
+  
+        <div class="container">
+            <br>
             <h1 class="text-center">Student Grades Management System</h1>
 
-        </div>
-        <div class="container-fluid mt-3">
+        </div> <br>
+
+        <div class="container-fluid mt-5">
+           <div class="container mt-4">
             <div class="row">
-                <div class="col-6 p-5 bg-dark text-white">
+                <div class="col-sm-6 p-2 bg-dark text-white justify-content-center">
                     <div class="content-tab">
                         <div id="home" class="tab-pane container active">
 
-                            <p class="mt-4">A Student Grade Management System is a software application designed to help
+                            <p class="m-5 text-center">A Student Grade Management System is a software application designed to help
                                 educational
                                 institutions efficiently manage and track students' academic performance. The system
                                 enables
                                 educators to input, store, and retrieve student grades for various subjects and
                                 assignments.
-                                It offers features like grade calculation, performance analysis, and reporting, allowing
-                                teachers to generate transcripts or performance reports quickly. </p>
+                                 </p>
 
 
                         </div>
                     </div>
                 </div>
-                <div class="col-6 p-2  bg-light text-white">
+                <div class="col-sm-6 p-2  bg-light text-white">
                     <div class="container">
 
                         <img src="../Student Grade MIS/img/pexels-anastasiya-gepp-654466-1462630 (1).jpg"
-                            class="rounded float-center" alt="" width="400px" height="300px" >
-                            
+                            class="rounded float-center" alt="" width="400px" height="300px">
+
                     </div>
 
                 </div>
@@ -74,218 +86,13 @@
 
 
             </div> <br>
-        </div>
-
-        <div class="container mt-3">
-            <div id="student" class="tab-pane cont>ainer ">
-                <h1 class="text-center">Student List</h1> <br>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Student ID</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th>Gender</th>
-                            <th>Class Level</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>Himbaza</td>
-                            <td>Celine</td>
-                            <td>Female</td>
-                            <td>Level I</td>
-                        </tr>
-                        <tr>
-                            <td>002</td>
-                            <td>Ishimwe</td>
-                            <td>Cynthia</td>
-                            <td>Female</td>
-                            <td>Level II</td>
-                        </tr>
-                        <tr>
-                            <td>003</td>
-                            <td>Kaze</td>
-                            <td>Elliot</td>
-                            <td>Male</td>
-                            <td>Level I</td>
-                        </tr>
-                        <tr>
-                            <td>004</td>
-                            <td>Roxy</td>
-                            <td>Galina</td>
-                            <td>Female</td>
-                            <td>Level III</td>
-                        </tr>
-                        <td>005</td>
-                        <td>Dushime</td>
-                        <td>Kyle</td>
-                        <td>Male</td>
-                        <td>Level I</td>
-                    </tbody>
-                </table>
-                <a href="#" id="createStudentLink" class="btn btn-secondary"> Create New Student</a>
-                <div id="studentForm" class="mt-4" style="display: none;">
-                    <form>
-                        <div class="mb-3 mt-3">
-                            <label for="stdid">Student ID:</label>
-                            <input type="student-id" class="form-control" id="student-id"
-                                placeholder="Enter your student ID" name="student Id">
-                        </div>
-                        <div class="mb-3">
-                            <label for="fname">First Name:</label>
-                            <input type="fname" class="form-control" id="fname" placeholder="Enter your first name"
-                                name="first name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="lname">last Name:</label>
-                            <input type="lname" class="form-control" id="lname" placeholder="Enter your last name"
-                                name="last name">
-                        </div>
-                        <div class="mb-3">
-                            <label for="gender">Gender:</label>
-                            <input type="gender" class="form-control" id="gender" placeholder="Enter gender"
-                                name="gender">
-                        </div>
-                        <div class="mb-3">
-                            <label for="class-level">Class level:</label>
-                            <input type="class-level" class="form-control" id="class-level"
-                                placeholder="Enter class level" name="class level">
-                        </div>
-
-                        <button type="submit" class="btn btn-secondary">Submit</button>
-                    </form>
-                </div>
-                <!-- JavaScript to toggle the form visibility -->
-                <script>
-                    document.getElementById('createStudentLink').addEventListener('click', function (event) {
-                        event.preventDefault(); // Prevents the default anchor behavior
-                        var form = document.getElementById('studentForm');
-                        if (form.style.display === 'none') {
-                            form.style.display = 'block'; // Show the form
-                        } else {
-                            form.style.display = 'none'; // Hide the form if already visible
-                        }
-                    });
-                </script>
-            </div>
-
-
-        </div> <br>
-
-
-        <div class="container mt-3">
-
-            <div id="marks" class="tab-pane container ">
-                <h1 class="text-center">Student list with their marks</h1> <br>
-                <table class="table table-bordered">
-                    <thead>
-                        <tr>
-                            <th>Student ID</th>
-                            <th>Student Name</th>
-                            <th>Class Level</th>
-                            <th>Marks</th>
-                        </tr>
-
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>001</td>
-                            <td>Himbaza Celine</td>
-                            <td>Level I</td>
-                            <th>80</th>
-                        </tr>
-                        <tr>
-                            <td>002</td>
-                            <td>Ishimwe Cynthia</td>
-                            <td>Level II</td>
-                            <th>76</th>
-                        </tr>
-                        <tr>
-                            <td>003</td>
-                            <td>Kaze Elliot</td>
-                            <td>Level I</td>
-                            <td>73</td>
-                        </tr>
-                        <tr>
-                            <td>004</td>
-                            <td>Roxy Galina</td>
-                            <td>Level III</td>
-                            <td>85</td>
-                        </tr>
-                        <td>005</td>
-                        <td>Dushime Kyle</td>
-                        <td>Level I</td>
-                        <td>80</td>
-                    </tbody>
-                </table>
-                <a href="#" id="RecordMarks" class="btn btn-secondary"> Record Marks of Student</a>
-                <div id="markForm" class="mt-4" style="display: none;">
-
-
-                    <!-- <ul class="nav justify-content-start nav-pills" role="tablist">
-
-               
-                
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-bs-toggle="pill" data-bs-toggle="dropdown"
-                        href="#service">Select student </a>
-                    <ul class="dropdown-menu">
-                        <li>
-                            <a class="dropdown-item" href="#">Himbaza Celine</a>
-                            <a class="dropdown-item" href="#">Ishimwe Cynthia</a>
-                            <a class="dropdown-item" href="#">Kaze Eliot</a>
-                        </li>
-                    </ul>
-                </li></ul>-->
-
-                    <!-- Dropdown to select existing student -->
-                    <div class="mb-3">
-                        <label for="studentSelect" class="form-label">Select a Student</label>
-                        <select class="form-select" id="studentSelect" required>
-                            <option value="">Choose a student</option>
-                            <option value="1">Himbaza Celine</option>
-                            <option value="2">Ishimwe Cynthia</option>
-                            <option value="3">Roxy Galina</option>
-                            <option value="4">John Petter</option>
-                        </select>
-                    </div>
-
-
-                    <form>
-
-                        <div class="mb-3">
-                            <label for="class-level">Enter student Marks:</label>
-                            <input type="mark" class="form-control" id="mark" placeholder="Enter marks" name="mark">
-                        </div>
-                        <button type="submit" class="btn btn-secondary">Submit</button>
-                    </form>
-                </div>
-                <!-- JavaScript to toggle the form visibility -->
-                <script>
-                    document.getElementById('RecordMarks').addEventListener('click', function (event) {
-                        event.preventDefault(); // Prevents the default anchor behavior
-                        var form = document.getElementById('markForm');
-                        if (form.style.display === 'none') {
-                            form.style.display = 'block'; // Show the form
-                        } else {
-                            form.style.display = 'none'; // Hide the form if already visible
-                        }
-                    });
-                </script>
-            </div>
-
-
+           </div>
+            
         </div>
 
     </div>
 
-
-
-
-
+       
 </body>
 
 </html>
