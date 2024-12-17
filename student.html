@@ -3,7 +3,9 @@
 
 <head>
     <meta charset="UTF-8">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap"
+        rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="style.css">
     <!-- Latest compiled and minified CSS -->
@@ -17,44 +19,20 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
     <!-- DataTables JS -->
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" charset="utf8"
+        src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
 
     <title>Student-Grade MIS</title>
 </head>
 
 <body>
-    <div class="container-fluid bg-dark">
-        <div class="row">
-            <div class="col-4">
-                <img src="../Student Grade MIS/img/logo.PNG" alt="" width="100" height="54">
-            </div>
-            <div class="col-7">
-                <div class="container mt-2">
-                    <ul class="nav text-white">
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="index.html">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="student.html">Student</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-white" href="marks.html">Marks of Student</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-
-            <div class="col-1">
-                <a href="#" class="btn btn-light mt-2">Login</a>
-            </div>
-        </div>
-    </div> 
+    <div id="navbar"></div>
 
     <div class="container-fluid mt-4">
         <div class="container mt-3">
             <div id="student" class="tab-pane container">
                 <h1 class="text-center">Student List</h1> <br>
-                
+
                 <!-- DataTable for displaying students -->
                 <table id="studentTable" class="package-lock.json table table-bordered">
                     <thead>
@@ -71,22 +49,24 @@
                         <!-- Dynamic data will be inserted here from LocalStorage -->
                     </tbody>
                 </table>
-                
+
                 <a href="#" id="createStudentLink" class="btn btn-success">Create New Student</a>
                 <div id="studentForm" class="mt-4" style="display: none;">
                     <form id="studentFormData">
                         <div class="mb-3 mt-3">
                             <label for="fname">First Name:</label>
-                            <input type="text" class="form-control" id="fname" placeholder="Enter your first name" name="firstName" required>
+                            <input type="text" class="form-control" id="fname" placeholder="Enter your first name"
+                                name="firstName" required>
                         </div>
                         <div class="mb-3">
                             <label for="lname">Last Name:</label>
-                            <input type="text" class="form-control" id="lname" placeholder="Enter your last name" name="lastName" required>
+                            <input type="text" class="form-control" id="lname" placeholder="Enter your last name"
+                                name="lastName" required>
                         </div>
                         <div class="mb-3">
                             <label for="gender">Gender:</label>
                             <div class="form-check">
-                                <input type="radio" class="form-check-input" id="radio1" name="gender" value="Female" >
+                                <input type="radio" class="form-check-input" id="radio1" name="gender" value="Female">
                                 <label class="form-check-label" for="radio1">Female</label>
                             </div>
                             <div class="form-check">
@@ -105,22 +85,23 @@
                         </div>
 
                         <button type="submit" class="btn btn-success">Submit</button>
-                        <button type="button" class="btn btn-danger" id="resetFormButton">Reset</button> <!-- Reset Button -->
+                        <button type="button" class="btn btn-danger" id="resetFormButton">Reset</button>
+                        <!-- Reset Button -->
                     </form>
                 </div>
-                
+
                 <script>
                     // Show/Hide the form for creating new student
-                    document.getElementById('createStudentLink').addEventListener('click', function(event) {
-                        event.preventDefault(); 
+                    document.getElementById('createStudentLink').addEventListener('click', function (event) {
+                        event.preventDefault();
                         var form = document.getElementById('studentForm');
                         form.style.display = form.style.display === 'none' ? 'block' : 'none';
                     });
 
                     // Store student data to LocalStorage and update the table
-                    document.getElementById('studentFormData').addEventListener('submit', function(event) {
+                    document.getElementById('studentFormData').addEventListener('submit', function (event) {
                         event.preventDefault();
-                        
+
                         // Increment the student ID counter
                         let studentId = localStorage.getItem('studentIdCounter');
                         if (!studentId) studentId = 0;
@@ -149,7 +130,7 @@
                     });
 
                     // Reset the form fields
-                    document.getElementById('resetFormButton').addEventListener('click', function() {
+                    document.getElementById('resetFormButton').addEventListener('click', function () {
                         // Reset all fields
                         document.getElementById('studentFormData').reset();
                     });
@@ -192,6 +173,20 @@
 
                     // Load student data on page load
                     document.addEventListener('DOMContentLoaded', updateStudentTable);
+
+
+                    // Include the JavaScript to load the navbar 
+
+                    fetch("navbar.html")
+                        .then(response => {
+                            if (!response.ok) throw new Error("Failed to load navbar.");
+                            return response.text();
+                        })
+                        .then(data => {
+                            document.getElementById("navbar").innerHTML = data;
+                        })
+                        .catch(error => console.error(error));
+
                 </script>
             </div>
         </div>
