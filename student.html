@@ -26,7 +26,31 @@
 </head>
 
 <body>
-    <div id="navbar"></div>
+    <div class="container-fluid bg-dark">
+        <div class="row">
+            <div class="col-4">
+                <img src="../Student Grade MIS/img/logo.PNG" alt="" width="100" height="54">
+            </div>
+            <div class="col-7">
+                <div class="container mt-2">
+                    <ul class="nav text-white">
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="student.html">Student</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-white" href="marks.html">Marks of Student</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-1">
+                <a href="#" class="btn btn-light mt-2">Login</a>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid mt-4">
         <div class="container mt-3">
@@ -174,18 +198,58 @@
                     // Load student data on page load
                     document.addEventListener('DOMContentLoaded', updateStudentTable);
 
+                    <td>
+    <button class="btn btn-warning btn-sm" onclick="editStudent(${student.studentId})">Edit</button>
+    <button class="btn btn-danger btn-sm" onclick="deleteStudent(${student.studentId})">Delete</button>
+</td>
+function editStudent(studentId) {
+    const students = JSON.parse(localStorage.getItem('students')) || [];
+    const student = students.find(student => student.studentId === studentId);
 
-                    // Include the JavaScript to load the navbar 
+    if (student) {
+        document.getElementById('fname').value = student.firstName;
+        document.getElementById('lname').value = student.lastName;
+        document.querySelector(`input[name="gender"][value="${student.gender}"]`).checked = true;
+        document.getElementById('class-level').value = student.classLevel;
 
-                    fetch("navbar.html")
-                        .then(response => {
-                            if (!response.ok) throw new Error("Failed to load navbar.");
-                            return response.text();
-                        })
-                        .then(data => {
-                            document.getElementById("navbar").innerHTML = data;
-                        })
-                        .catch(error => console.error(error));
+        // Show the form and change the submit button to update
+        document.getElementById('studentForm').style.display = 'block';
+        const submitButton = document.querySelector('#studentFormData button[type="submit"]');
+        submitButton.textContent = 'Update';
+        submitButton.onclick = function (event) {
+            event.preventDefault();
+            updateStudent(studentId);
+        };
+    }
+}
+
+function updateStudent(studentId) {
+    const students = JSON.parse(localStorage.getItem('students')) || [];
+    const studentIndex = students.findIndex(student => student.studentId === studentId);
+
+    if (studentIndex !== -1) {
+        students[studentIndex].firstName = document.getElementById('fname').value;
+        students[studentIndex].lastName = document.getElementById('lname').value;
+        students[studentIndex].gender = document.querySelector('input[name="gender"]:checked').value;
+        students[studentIndex].classLevel = document.getElementById('class-level').value;
+
+        localStorage.setItem('students', JSON.stringify(students));
+        updateStudentTable();
+        document.getElementById('studentForm').style.display = 'none';
+    }
+}
+
+                    // // Include the JavaScript to load the navbar 
+
+                    // fetch("navbar.html")
+                    //     .then(response => {
+                    //         if (!response.ok) throw new Error("Failed to load navbar.");
+                    //         return response.text();
+                    //     })
+                    //     .then(data => {
+                    //         document.getElementById("navbar").innerHTML = data;
+                    //     })
+                    //     .catch(error => console.error(error));
 
                 </script>
             </div>
