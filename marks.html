@@ -56,6 +56,7 @@
                         <th>Student Name</th>
                         <th>Class Level</th>
                         <th>Marks</th>
+                        <th>Grade</th>
                     </tr>
                 </thead>
                 <tbody id="studentDataBody">
@@ -154,6 +155,62 @@
 
 // Load table data on page load
         document.addEventListener('DOMContentLoaded', updateStudentTable);
+
+        function calculateGrade(marks) {
+    if (marks >= 80) {
+        return 'A';
+    } else if (marks >= 70) {
+        return 'B';
+    }  else if (marks >= 60) {
+        return 'C';
+    } else if (marks >= 50) {
+        return 'D';
+    } else {
+        return 'F';
+    }
+}
+function updateStudentTable() {
+    const students = JSON.parse(localStorage.getItem('students')) || [];
+    const tableBody = document.getElementById('studentDataBody');
+    tableBody.innerHTML = ''; // Clear existing rows
+
+    students.forEach(student => {
+        const row = document.createElement('tr');
+        const marks = student.marks ? parseInt(student.marks, 10) : null;
+        const grade = marks !== null ? calculateGrade(marks) : 'N/A';
+        row.innerHTML = `
+            <td>${student.studentId} ${student.firstName} ${student.lastName}</td>
+            <td>${student.classLevel}</td>
+            <td>${marks !== null ? marks : 'N/A'}</td>
+            <td>${grade}</td>
+        `;
+        tableBody.appendChild(row);
+    });
+}
+
+document.getElementById('markFormData').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const studentId = document.getElementById('studentSelect').value;
+    const marks = parseInt(document.getElementById('mark').value, 10);
+
+    if (!studentId || isNaN(marks)) {
+        alert('Please fill out all fields with valid data.');
+        return;
+    }
+
+    let students = JSON.parse(localStorage.getItem('students')) || [];
+    students = students.map(student => {
+        if (student.studentId == studentId) {
+            student.marks = marks; // Store marks as a number
+        }
+        return student;
+    });
+
+    localStorage.setItem('students', JSON.stringify(students));
+    updateStudentTable(); // Refresh the table
+    document.getElementById('markForm').style.display = 'none'; // Hide the form
+});
+
     </script>
 </body>
 </html>
