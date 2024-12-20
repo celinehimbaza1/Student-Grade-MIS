@@ -57,8 +57,7 @@
             <div id="student" class="tab-pane container">
                 <h1 class="text-center">Student List</h1> <br>
 
-                <!-- DataTable for displaying students -->
-                <table id="studentTable" class="package-lock.json table table-bordered">
+                <table id="studentTable" class="table table-bordered">
                     <thead>
                         <tr>
                             <th>Student ID</th>
@@ -70,7 +69,6 @@
                         </tr>
                     </thead>
                     <tbody id="studentDataBody">
-                        <!-- Dynamic data will be inserted here from LocalStorage -->
                     </tbody>
                 </table>
 
@@ -110,111 +108,111 @@
 
                         <button type="submit" class="btn btn-success">Submit</button>
                         <button type="button" class="btn btn-danger" id="resetFormButton">Reset</button>
-                        <!-- Reset Button -->
                     </form>
                 </div>
-
-                <script>
-                    // Show/Hide the form for creating new student
-                    document.getElementById('createStudentLink').addEventListener('click', function (event) {
-                        event.preventDefault();
-                        var form = document.getElementById('studentForm');
-                        form.style.display = form.style.display === 'none' ? 'block' : 'none';
-                    });
-
-                    // Store student data to LocalStorage and update the table
-                    document.getElementById('studentFormData').addEventListener('submit', function (event) {
-                        event.preventDefault();
-
-                        // Increment the student ID counter
-                        let studentId = localStorage.getItem('studentIdCounter');
-                        if (!studentId) studentId = 0;
-                        studentId = parseInt(studentId) + 1;
-                        localStorage.setItem('studentIdCounter', studentId);
-
-                        const firstName = document.getElementById('fname').value;
-                        const lastName = document.getElementById('lname').value;
-                        const gender = document.querySelector('input[name="gender"]:checked').value;
-                        const classLevel = document.getElementById('class-level').value;
-
-                        const newStudent = { studentId, firstName, lastName, gender, classLevel };
-
-                        // Get existing students from localStorage, if any
-                        let students = JSON.parse(localStorage.getItem('students')) || [];
-                        students.push(newStudent);
-
-                        // Save the updated student list back to localStorage
-                        localStorage.setItem('students', JSON.stringify(students));
-
-                        // Update the student table
-                        updateStudentTable();
-
-                        // Hide the form after submission
-                        document.getElementById('studentForm').style.display = 'none';
-                    });
-
-                    // Reset the form fields
-                    document.getElementById('resetFormButton').addEventListener('click', function () {
-                        // Reset all fields
-                        document.getElementById('studentFormData').reset();
-                    });
-
-                    // Delete a student from the table and localStorage
-                    function deleteStudent(studentId) {
-                        let students = JSON.parse(localStorage.getItem('students')) || [];
-                        students = students.filter(student => student.studentId !== studentId);
-                        localStorage.setItem('students', JSON.stringify(students));
-
-                        // Update the table after deletion
-                        updateStudentTable();
-                    }
-
-                    // Update the student data table from localStorage
-                    function updateStudentTable() {
-                        const students = JSON.parse(localStorage.getItem('students')) || [];
-                        const tableBody = document.getElementById('studentDataBody');
-                        tableBody.innerHTML = ''; // Clear the existing rows
-
-                        // Loop through the students and create table rows
-                        students.forEach(student => {
-                            const row = document.createElement('tr');
-                            row.innerHTML = `
-                                <td>${student.studentId}</td>
-                                <td>${student.firstName}</td>
-                                <td>${student.lastName}</td>
-                                <td>${student.gender}</td>
-                                <td>${student.classLevel}</td>
-                                <td>
-                                    <button class="btn btn-danger btn-sm" onclick="deleteStudent(${student.studentId})">Delete</button>
-                                </td>
-                            `;
-                            tableBody.appendChild(row);
-                        });
-
-                        // Initialize the DataTable
-                        $('#studentTable').DataTable();
-                    }
-
-                    // Load student data on page load
-                    document.addEventListener('DOMContentLoaded', updateStudentTable);
-
-
-                    // Include the JavaScript to load the navbar 
-
-                    fetch("navbar.html")
-                        .then(response => {
-                            if (!response.ok) throw new Error("Failed to load navbar.");
-                            return response.text();
-                        })
-                        .then(data => {
-                            document.getElementById("navbar").innerHTML = data;
-                        })
-                        .catch(error => console.error(error));
-
-                </script>
             </div>
         </div>
     </div>
+
+    <script>
+        document.getElementById('createStudentLink').addEventListener('click', function (event) {
+            event.preventDefault();
+            var form = document.getElementById('studentForm');
+            form.style.display = form.style.display === 'none' ? 'block' : 'none';
+        });
+
+        document.getElementById('studentFormData').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            let studentId = localStorage.getItem('studentIdCounter');
+            if (!studentId) studentId = 0;
+            studentId = parseInt(studentId) + 1;
+            localStorage.setItem('studentIdCounter', studentId);
+
+            const firstName = document.getElementById('fname').value;
+            const lastName = document.getElementById('lname').value;
+            const gender = document.querySelector('input[name="gender"]:checked').value;
+            const classLevel = document.getElementById('class-level').value;
+
+            const newStudent = { studentId, firstName, lastName, gender, classLevel };
+
+            let students = JSON.parse(localStorage.getItem('students')) || [];
+            students.push(newStudent);
+
+            localStorage.setItem('students', JSON.stringify(students));
+            updateStudentTable();
+            document.getElementById('studentForm').style.display = 'none';
+        });
+
+        document.getElementById('resetFormButton').addEventListener('click', function () {
+            document.getElementById('studentFormData').reset();
+        });
+
+        function deleteStudent(studentId) {
+            let students = JSON.parse(localStorage.getItem('students')) || [];
+            students = students.filter(student => student.studentId !== studentId);
+            localStorage.setItem('students', JSON.stringify(students));
+            updateStudentTable();
+        }
+
+        function editStudent(studentId) {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const student = students.find(student => student.studentId === studentId);
+
+            if (student) {
+                document.getElementById('fname').value = student.firstName;
+                document.getElementById('lname').value = student.lastName;
+                document.querySelector(`input[name="gender"][value="${student.gender}"]`).checked = true;
+                document.getElementById('class-level').value = student.classLevel;
+
+                document.getElementById('studentForm').style.display = 'block';
+
+                const submitButton = document.querySelector('#studentFormData button[type="submit"]');
+                submitButton.textContent = 'Update';
+                submitButton.onclick = function (event) {
+                    event.preventDefault();
+
+                    student.firstName = document.getElementById('fname').value;
+                    student.lastName = document.getElementById('lname').value;
+                    student.gender = document.querySelector('input[name="gender"]:checked').value;
+                    student.classLevel = document.getElementById('class-level').value;
+
+                    localStorage.setItem('students', JSON.stringify(students));
+                    updateStudentTable();
+                    document.getElementById('studentForm').style.display = 'none';
+                };
+            }
+        }
+
+        function updateStudentTable() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            const tableBody = document.getElementById('studentDataBody');
+            tableBody.innerHTML = '';
+
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${student.studentId}</td>
+                    <td>${student.firstName}</td>
+                    <td>${student.lastName}</td>
+                    <td>${student.gender}</td>
+                    <td>${student.classLevel}</td>
+                    <td>
+                        <button class="btn btn-warning btn-sm" onclick="editStudent(${student.studentId})">Edit</button>
+                        <button class="btn btn-danger btn-sm" onclick="deleteStudent(${student.studentId})">Delete</button>
+                    </td>
+                `;
+                tableBody.appendChild(row);
+            });
+
+            if ($.fn.DataTable.isDataTable('#studentTable')) {
+                $('#studentTable').DataTable().destroy();
+            }
+            $('#studentTable').DataTable();
+        }
+
+        document.addEventListener('DOMContentLoaded', updateStudentTable);
+    </script>
 </body>
 
 </html>
